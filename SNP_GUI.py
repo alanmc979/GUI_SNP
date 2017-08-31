@@ -120,8 +120,10 @@ class Data_GUI(QMainWindow):
 	def create_main_frame(self):
 		""" Creates Main Frame. Adds boxes and labels  """
 		self.main_frame = QWidget()
-		self.fig = Figure((20.0,20.0), dpi=500)
-		self.fig2=Figure((20,20), dpi=500)
+
+		#Plot Settings
+		self.fig = Figure((6,6), dpi=100)
+		self.fig2=Figure((6,6), dpi=100)
 		axes1=tuple()
 		axes2=tuple()
 		fig, axes = plt.subplots(1,1, sharex=False)
@@ -132,8 +134,8 @@ class Data_GUI(QMainWindow):
 		self.fig2 = fig2
 		self.axes = axes
 		self.axes2 = axes
-		self.canvas = FigureCanvas(fig)
-		self.canvas2= FigureCanvas(fig2)
+		self.canvas = FigureCanvas(self.fig)
+		self.canvas2= FigureCanvas(self.fig2)
 		self.canvas2.setParent(self.main_frame)
 		self.canvas.setParent(self.main_frame)
 		self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
@@ -229,32 +231,38 @@ class Data_GUI(QMainWindow):
 		pulse_settings_w_lst=[self.take_pulses_bx,self.pulses_graph_labeled,self.canvas2, self.mpl_toolbar2]
 		#-----------------------------------------------------------------------
 		# Create layout
-		#hbox_main = QHBoxLayout()
 		grid = QGridLayout()
 		grid.setSpacing(5)
-		for i in range(len(settings_w_lst)-1):
-			grid.addWidget(settings_w_lst[i],i,0)
+		for i in range(len(settings_w_lst)):
+			w = settings_w_lst[i]
+			w.setMaximumWidth(200)
+			grid.addWidget(w,i,0)
 
-		for i in range(len(sweep_settings_w_lst)-1):
-			if sweep_settings_w_lst[i]==self.canvas:
-				grid.addWidget(sweep_settings_w_lst[i],i,1,i+15,1)
-			elif sweep_settings_w_lst==self.mpl_toolbar:
-				grid.addWidget(sweep_settings_w_lst[i],i,1)
+		for i in range(len(sweep_settings_w_lst)):
+			w = sweep_settings_w_lst[i]
+			if w==self.canvas:
+				grid.addWidget(w,i,1,i+10,1)
+			elif w==self.mpl_toolbar:
+				grid.addWidget(w,i+11,1)
 			else:
-				grid.addWidget(sweep_settings_w_lst[i],i,1)
+				w.setMaximumWidth(200)
+				grid.addWidget(w,i,1)
 
-		for i in range(len(noise_settings_w_lst)-1):
-			grid.addWidget(noise_settings_w_lst[i],i,2)
+		for i in range(len(noise_settings_w_lst)):
+			w = noise_settings_w_lst[i]
+			w.setMaximumWidth(200)
+			grid.addWidget(w,i,2)
 
-		for i in range(len(pulse_settings_w_lst)-1):
-			if pulse_settings_w_lst[i]==self.canvas2:
-				grid.addWidget(pulse_settings_w_lst[i],i,3,i+15,3)
-			elif pulse_settings_w_lst==self.mpl_toolbar2:
-				grid.addWidget(pulse_settings_w_lst[i],i,3)
+		for i in range(len(pulse_settings_w_lst)):
+			w = pulse_settings_w_lst[i]
+			if w==self.canvas2:
+				grid.addWidget(w,i,3,i+10,3)
+			elif w==self.mpl_toolbar2:
+				grid.addWidget(w,i+11,3)
 			else:
-				grid.addWidget(pulse_settings_w_lst[i],i,3)
+				w.setMaximumWidth(200)
+				grid.addWidget(w,i,3)
 
-		#hbox_main.addLayout(grid)
 		self.main_frame.setLayout(grid)
 		self.setCentralWidget(self.main_frame)
 
@@ -333,7 +341,7 @@ def main():
 	
 	app = QApplication(sys.argv)
 	form = Data_GUI()
-	form.setGeometry(100,100,1500,600)
+	form.setGeometry(100,100,1000,600)
 	form.show()
 	app.exec_()
 	
