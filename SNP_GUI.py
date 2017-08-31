@@ -121,27 +121,6 @@ class Data_GUI(QMainWindow):
 		""" Creates Main Frame. Adds boxes and labels  """
 		self.main_frame = QWidget()
 
-		#Plot Settings
-		self.fig = Figure((6,6), dpi=100)
-		self.fig2=Figure((6,6), dpi=100)
-		axes1=tuple()
-		axes2=tuple()
-		fig, axes = plt.subplots(1,1, sharex=False)
-		fig2,axes= plt.subplots(1,1, sharex=False)
-		fig.subplots_adjust(hspace=.3)
-		fig2.subplots_adjust(hspace=.3)
-		self.fig = fig
-		self.fig2 = fig2
-		self.axes = axes
-		self.axes2 = axes
-		self.canvas = FigureCanvas(self.fig)
-		self.canvas2= FigureCanvas(self.fig2)
-		self.canvas2.setParent(self.main_frame)
-		self.canvas.setParent(self.main_frame)
-		self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
-		self.mpl_toolbar2 = NavigationToolbar(self.canvas2, self.main_frame)
-
-
 		#Labels and Default Settings
 		self.data_path_label= QLabel('Data Path:')
 		self.data_path_txtbx= QLineEdit('/Users/alanmc/Documents')
@@ -222,15 +201,16 @@ class Data_GUI(QMainWindow):
 		self.start_atten_label, self.start_atten_txtbx, self.stop_atten_label, self.stop_atten_txtbx, self.atten_step_label, self.atten_step_txtbx, self.tot_atten_label, self.tot_atten_txtbx,
 		self.numb_res_label, self.num_res_1_bx, self.num_res_2_bx, self.numb_freq_steps_label, self.numb_freq_steps_txtbx, self.sample_avg_label, self.sample_avg_txtbx, self.sweep_sampling_rate_label, self.sweep_sampling_rate_txtbx, self.used_fixed_span_bx]
 		
-		sweep_settings_w_lst=[self.take_sweep_button, self.res_graph_label,self.canvas, self.mpl_toolbar]
+		sweep_settings_w_lst=[self.take_sweep_button, self.res_graph_label]
 
 		noise_settings_w_lst=[self.take_noise_bx, self.time_per_integration_label, self.time_per_integration_txtbx, self.total_time_label, self.total_time_txtbx, 
 		self.noise_sampling_rate_label,self.noise_sampling_rate_txtbx, self.decimation_factor_label, self.decimation_factor_txtbx, self.take_add, self.take_add_txtbx, self.take_add_label, self.take_add2_txtbx, self.take_add2_label,
 		self.use_100khz_fit, self.save_raw_data, self.save_raw_data_label, self.calc_spectra, self.cpsd_btw_res, self.take_offres_data, self.spectra_settings, self.fit_type_label, self.quick_fit_bx, self.full_fit_bx, self.popup_noise]
 
-		pulse_settings_w_lst=[self.take_pulses_bx,self.pulses_graph_labeled,self.canvas2, self.mpl_toolbar2]
+		pulse_settings_w_lst=[self.take_pulses_bx,self.pulses_graph_labeled]
 		#-----------------------------------------------------------------------
-		# Create layout
+		
+		# Creates layout
 		grid = QGridLayout()
 		grid.setSpacing(5)
 		for i in range(len(settings_w_lst)):
@@ -240,13 +220,8 @@ class Data_GUI(QMainWindow):
 
 		for i in range(len(sweep_settings_w_lst)):
 			w = sweep_settings_w_lst[i]
-			if w==self.canvas:
-				grid.addWidget(w,i,1,i+10,1)
-			elif w==self.mpl_toolbar:
-				grid.addWidget(w,i+11,1)
-			else:
-				w.setMaximumWidth(200)
-				grid.addWidget(w,i,1)
+			w.setMaximumWidth(200)
+			grid.addWidget(w,i,1)
 
 		for i in range(len(noise_settings_w_lst)):
 			w = noise_settings_w_lst[i]
@@ -255,13 +230,8 @@ class Data_GUI(QMainWindow):
 
 		for i in range(len(pulse_settings_w_lst)):
 			w = pulse_settings_w_lst[i]
-			if w==self.canvas2:
-				grid.addWidget(w,i,3,i+10,3)
-			elif w==self.mpl_toolbar2:
-				grid.addWidget(w,i+11,3)
-			else:
-				w.setMaximumWidth(200)
-				grid.addWidget(w,i,3)
+			w.setMaximumWidth(200)
+			grid.addWidget(w,i,3)
 
 		self.main_frame.setLayout(grid)
 		self.setCentralWidget(self.main_frame)
