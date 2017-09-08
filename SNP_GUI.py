@@ -163,7 +163,6 @@ class Data_GUI(QMainWindow):
 
 		#Sweep Settings
 		self.take_sweep_button = QPushButton('Do Sweep')
-		self.res_graph_label= QLabel('Resonator Graph')
 
 		#Noise Settings
 		self.take_noise_bx = QPushButton('Take Noise')
@@ -188,26 +187,26 @@ class Data_GUI(QMainWindow):
 		self.take_offres_data= QCheckBox('Take Offres Data')
 		self.spectra_settings= QPushButton('Spectra Settings')
 		self.fit_type_label= QLabel('Fit Type')
-		self.quick_fit_bx= QRadioButton('Quick Fit')
-		self.full_fit_bx= QRadioButton('Full Fit') 
+		self.fit_type_bx =QComboBox(self)
+		self.fit_type_bx.addItem('Quick Fit')
+		self.fit_type_bx.addItem('Full Fit') 
 		self.popup_noise = QPushButton('Open Noise Graph')
 
 		#Pulse Settings
 		self.take_pulses_bx = QPushButton('Take Pulses')
-		self.pulses_graph_labeled = QLabel('Pulses Graph')
 		#-----------------------------------------------------------------------
 		# Widget Lists (order matters) 
 		settings_w_lst = [ self.data_path_label, self.data_path_txtbx, self.browse_button, self.selec_sys, self.system, self.start_temp_label, self.start_temp_txtbx, self.stop_temp_label, self.stop_temp_txtbx, self.wait_time_label, self.wait_time_txtbx,
 		self.start_atten_label, self.start_atten_txtbx, self.stop_atten_label, self.stop_atten_txtbx, self.atten_step_label, self.atten_step_txtbx, self.tot_atten_label, self.tot_atten_txtbx,
 		self.numb_res_label, self.num_res_1_bx, self.num_res_2_bx, self.numb_freq_steps_label, self.numb_freq_steps_txtbx, self.sample_avg_label, self.sample_avg_txtbx, self.sweep_sampling_rate_label, self.sweep_sampling_rate_txtbx, self.used_fixed_span_bx]
 		
-		sweep_settings_w_lst=[self.take_sweep_button, self.res_graph_label]
+		sweep_settings_w_lst=[self.take_sweep_button]
 
 		noise_settings_w_lst=[self.take_noise_bx, self.time_per_integration_label, self.time_per_integration_txtbx, self.total_time_label, self.total_time_txtbx, 
 		self.noise_sampling_rate_label,self.noise_sampling_rate_txtbx, self.decimation_factor_label, self.decimation_factor_txtbx, self.take_add, self.take_add_txtbx, self.take_add_label, self.take_add2_txtbx, self.take_add2_label,
-		self.use_100khz_fit, self.save_raw_data, self.save_raw_data_label, self.calc_spectra, self.cpsd_btw_res, self.take_offres_data, self.spectra_settings, self.fit_type_label, self.quick_fit_bx, self.full_fit_bx, self.popup_noise]
+		self.use_100khz_fit, self.save_raw_data, self.save_raw_data_label, self.calc_spectra, self.cpsd_btw_res, self.take_offres_data, self.spectra_settings, self.fit_type_label, self.fit_type_bx, self.popup_noise]
 
-		pulse_settings_w_lst=[self.take_pulses_bx,self.pulses_graph_labeled]
+		pulse_settings_w_lst=[self.take_pulses_bx]
 		#-----------------------------------------------------------------------
 		
 		# Creates layout
